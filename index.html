@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Birthday 🎉</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      background: linear-gradient(270deg, #4facfe, #00f2fe);
+      background-size: 400% 400%;
+      animation: bgMove 10s infinite alternate;
+    }
+
+    @keyframes bgMove {
+      0% {background-position: left;}
+      100% {background-position: right;}
+    }
+
+    .page {
+      display: none;
+      padding-top: 100px;
+      animation: fade 1s;
+    }
+
+    .active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    input, button {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background: white;
+      color: #007BFF;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    h1 {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,100% {transform: translateY(0);}
+      50% {transform: translateY(-10px);}
+    }
+
+    img {
+      width: 180px;
+      border-radius: 15px;
+      margin: 10px;
+      animation: zoom 3s infinite alternate;
+    }
+
+    @keyframes zoom {
+      from {transform: scale(1);}
+      to {transform: scale(1.1);}
+    }
+
+    .spark {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <h2>Enter Password 🔐</h2>
+  <input type="password" id="pass" placeholder="Enter password">
+  <br>
+  <button onclick="checkPass()">Click Me 🎁</button>
+  <p id="wrong"></p>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <h1>🎂 Happy Birthday 🎉</h1>
+  <p>Hope your day is full of happiness 😊</p>
+
+  <button onclick="playMusic()">🎵 Play Music</button>
+  <br><br>
+  <button onclick="launchFireworks()">🎆 Surprise</button>
+  <br><br>
+  <button onclick="nextPage()">Next ➡️</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+  <h2>Memories 💙</h2>
+
+  <!-- Replace with her real images -->
+  <img src="https://via.placeholder.com/200">
+  <img src="https://via.placeholder.com/200">
+  <img src="https://via.placeholder.com/200">
+</div>
+
+<!-- MUSIC -->
+<audio id="bgmusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c6c4b8c71.mp3?filename=happy-birthday-33474.mp3" type="audio/mp3">
+</audio>
+
+<script>
+  function checkPass() {
+    let password = document.getElementById("pass").value;
+
+    if(password === "1234") {
+      document.getElementById("page1").classList.remove("active");
+      document.getElementById("page2").classList.add("active");
+    } else {
+      document.getElementById("wrong").innerText = "Wrong password 😅";
+    }
+  }
+
+  function nextPage() {
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
+  }
+
+  function playMusic() {
+    document.getElementById("bgmusic").play();
+  }
+
+  function launchFireworks() {
+    for (let i = 0; i < 50; i++) {
+      let spark = document.createElement("div");
+      spark.classList.add("spark");
+
+      document.body.appendChild(spark);
+
+      let x = window.innerWidth / 2;
+      let y = window.innerHeight / 2;
+
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+
+      let angle = Math.random() * 2 * Math.PI;
+      let distance = Math.random() * 200;
+
+      let moveX = Math.cos(angle) * distance;
+      let moveY = Math.sin(angle) * distance;
+
+      spark.style.background = `hsl(${Math.random()*360}, 100%, 60%)`;
+
+      spark.animate([
+        { transform: "translate(0,0)", opacity: 1 },
+        { transform: `translate(${moveX}px, ${moveY}px)`, opacity: 0 }
+      ], {
+        duration: 1000,
+        easing: "ease-out"
+      });
+
+      setTimeout(() => spark.remove(), 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
